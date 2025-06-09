@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { createNote, type newNoteData } from '../../services/noteService';
 import css from './NoteForm.module.css'
 import * as Yup from 'yup';
@@ -46,7 +46,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
             }}
         >
             {({ isSubmitting, isValid, dirty }) => (
-                <form className={css.form}>
+                <Form className={css.form}>
                     <div className={css.formGroup}>
                         <label htmlFor="title">Title</label>
                         <Field id="title" type="text" name="title" className={css.input} />
@@ -88,7 +88,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
                         {createNoteMutation.isPending ? 'Creating...' : 'Create Note'}
                         </button>
                     </div>
-                </form>
+                </Form>
             )}
         </Formik>
     );

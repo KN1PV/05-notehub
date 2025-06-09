@@ -12,7 +12,7 @@ interface notesResponce {
 
 export interface newNoteData {
     title: string;
-    content: string;
+    content?: string;
     tag: 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
 }
 
@@ -34,13 +34,11 @@ export const fetchNotes = async (search?: string, page = 1, perPage = 12): Promi
 }
 
 export const createNote = async (noteData: newNoteData): Promise<Note> => {
-    const response = await axios.post(API_URL, noteData, {
+    const response = await axios.post<Note>(API_URL, noteData, {
         headers: {
             Authorization: `Bearer ${API_KEY}`
         },
     });
-
-    console.log('Response create:', response.data);
 
     return response.data;
 }
