@@ -45,7 +45,7 @@ export default function NoteModal({ isOpen, onClose }: NoteModalProps) {
             onClick={handleBackDropClick}
             >
             <div className={css.modal}>
-                <NoteForm onCancel={onClose} />
+                <NoteForm onClose={onClose} />
             </div>
         </div>,
         document.body
