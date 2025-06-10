@@ -6,15 +6,17 @@ import SearchBox from '../SearchBox/SearchBox';
 import NoteModal from '../NoteModal/NoteModal';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { fetchNotes } from '../../services/noteService';
+import { useDebounce } from 'use-debounce';
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
 
   const { data } = useQuery({
-    queryKey: ['notes', currentPage, searchQuery],
-    queryFn: () => fetchNotes(searchQuery || '', currentPage),
+    queryKey: ['notes', currentPage, debouncedSearchQuery],
+    queryFn: () => fetchNotes(debouncedSearchQuery || '', currentPage),
     placeholderData: keepPreviousData,
   });
 
