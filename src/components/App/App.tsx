@@ -15,7 +15,7 @@ function App() {
   const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
 
   const { data } = useQuery({
-    queryKey: ['notes', currentPage, debouncedSearchQuery],
+    queryKey: ['notes', debouncedSearchQuery, currentPage],
     queryFn: () => fetchNotes(debouncedSearchQuery || '', currentPage),
     placeholderData: keepPreviousData,
   });
@@ -32,6 +32,8 @@ function App() {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  
+  const notes = data?.notes;
 
   return (
     <div className={css.app}>
@@ -48,8 +50,8 @@ function App() {
           Create note +
         </button>
       </header>
-      <NoteList notes={data?.notes || []} />
-      {isModalOpen && <NoteModal isOpen={isModalOpen} onClose={closeModal} />}
+      {notes && notes.length > 0 && <NoteList notes={notes} />}
+      {isModalOpen && <NoteModal onClose={closeModal} />}
     </div>
   );
 }

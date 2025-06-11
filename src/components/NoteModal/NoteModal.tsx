@@ -4,11 +4,10 @@ import React, { useEffect } from 'react';
 import NoteForm from '../NoteForm/NoteForm';
 
 interface NoteModalProps {
-    isOpen: boolean;
     onClose: () => void;
 }
 
-export default function NoteModal({ isOpen, onClose }: NoteModalProps) {
+export default function NoteModal({ onClose }: NoteModalProps) {
     useEffect(() => {
         const handleEscape = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
@@ -16,10 +15,8 @@ export default function NoteModal({ isOpen, onClose }: NoteModalProps) {
             }
         }
 
-        if (isOpen) {
-            document.addEventListener('keydown', handleEscape);
-            document.body.style.overflow = 'hidden';
-        }
+        document.addEventListener('keydown', handleEscape);
+        document.body.style.overflow = 'hidden';
 
         return () => {
             document.removeEventListener('keydown', handleEscape);
@@ -31,10 +28,6 @@ export default function NoteModal({ isOpen, onClose }: NoteModalProps) {
         if (event.target === event.currentTarget) {
             onClose();
         }
-    }
-
-    if (!isOpen) {
-        return null;
     }
 
     return createPortal(
